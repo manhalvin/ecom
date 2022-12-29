@@ -33,8 +33,9 @@ Route::middleware('auth')->group(function () {
 // Route Admin: User
     Route::controller(AdminUserController::class)->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
-            Route::prefix('/user')->name('user.')->group(function () {
+            Route::prefix('/users')->name('users.')->group(function () {
                 Route::post('/', 'store')->name('store');
+                Route::get('/', 'index')->name('index');
             });
         });
     });
