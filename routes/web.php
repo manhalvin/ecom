@@ -34,12 +34,16 @@ Route::middleware('auth')->group(function () {
     Route::controller(AdminUserController::class)->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('/users')->name('users.')->group(function () {
-                Route::post('/', 'store')->name('store');
                 Route::get('/', 'index')->name('index');
+                Route::get('/{user}/edit', 'edit')->name('edit');
+                Route::post('/', 'store')->name('store');
+                Route::put('/{user}', 'update')->name('update');
+                Route::delete('/{user}', 'destroy')->name('destroy');
+                Route::get('/list', 'userList')->name('list');
+                Route::get('/ajax/{user}/edit', 'userEditAjax')->name('edit_ajax');
             });
         });
     });
 });
 
 Auth::routes(['register' => false]);
-
