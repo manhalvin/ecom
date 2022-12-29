@@ -1,3 +1,6 @@
+@php
+    $module_active = session('module_active');
+@endphp
 <aside class="main-sidebar">
     <!-- sidebar-->
     <section class="sidebar">
@@ -17,14 +20,14 @@
         <!-- sidebar menu-->
         <ul class="sidebar-menu" data-widget="tree">
 
-            <li class="treeview">
-                <a href="">
+            <li class="treeview {{ $module_active == 'dashboard' ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard.index') }}">
                     <i data-feather="pie-chart"></i>
                     <span>Dashboard</span>
                 </a>
             </li> <br>
 
-            <li class="treeview">
+            <li class="treeview  {{ $module_active == 'users' ? 'active' : '' }}">
                 <a href="#">
                     <i data-feather="message-circle"></i>
                     <span>Quản lý users</span>
@@ -34,7 +37,6 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.users.index') }}"><i class="ti-more"></i>View User</a></li>
-                    <li><a href=""><i class="ti-more"></i>Add User</a></li>
                 </ul>
             </li>
 
@@ -43,10 +45,10 @@
 
     <div class="sidebar-footer">
         <!-- item-->
-        <a href="javascript:void(0)" class="link" data-toggle="tooltip" title=""
-            data-original-title="Settings" aria-describedby="tooltip92529"><i class="ti-settings"></i></a>
+        <a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Settings"
+            aria-describedby="tooltip92529"><i class="ti-settings"></i></a>
         <!-- item-->
-        <a href="javascript:void(0)" class="link" data-toggle="tooltip" title=""
-            data-original-title="Logout"><i class="ti-lock"></i></a>
+        <a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i
+                class="ti-lock"></i></a>
     </div>
 </aside>
