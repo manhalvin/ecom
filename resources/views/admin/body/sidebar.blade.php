@@ -54,6 +54,19 @@
                 </ul>
             </li>
 
+            <li class="treeview  {{ $module_active == 'permissions' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="message-circle"></i>
+                    <span>Tạo dữ liệu quyền</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.permissions.create') }}"><i class="ti-more"></i>Add permissions</a></li>
+                </ul>
+            </li>
+
         </ul>
     </section>
 
