@@ -27,6 +27,11 @@ class AdminUserUpdateRequest extends FormRequest
             'name' => 'required|min:6|max:255',
             'email' => 'unique:users,email,' . $this->user,
             'role' => 'required',
+            'group_id' => ['required',function($attribute, $value, $fail){
+                if($value==0){
+                        $fail('Vui lòng chọn nhóm');
+                }
+            }]
         ];
     }
 

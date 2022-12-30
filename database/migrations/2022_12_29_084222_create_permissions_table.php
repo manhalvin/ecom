@@ -19,6 +19,10 @@ return new class extends Migration
                 ->nullable();
             $table->string('display_name')
                 ->nullable();
+            $table->integer('parent_id')
+                ->nullable();
+            $table->string('key_code')
+                ->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,7 +17,17 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->checkPermissionAccess(config('permissions.access.list-user'));
+
+        $roleJson = $user->group->permissions;
+        if (!empty($roleJson)) {
+            $roleArr = json_decode($roleJson, true);
+
+            $check = isRole($roleArr, 'users');
+            return $check;
+        }
+
+        return false;
+        // return $user->checkPermissionAccess(config('permissions.access.list-user'));
     }
 
     /**
@@ -29,7 +39,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+
     }
 
     /**
@@ -40,7 +50,15 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        $roleJson = $user->group->permissions;
+        if (!empty($roleJson)) {
+            $roleArr = json_decode($roleJson, true);
+
+            $check = isRole($roleArr, 'users', 'add');
+            return $check;
+        }
+
+        return false;
     }
 
     /**
@@ -50,9 +68,31 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
+    // public function update(User $user)
+    // {
+    //     $roleJson = $user->group->permissions;
+    //     if (!empty($roleJson)) {
+    //         $roleArr = json_decode($roleJson, true);
+
+    //         $check = isRole($roleArr, 'users', 'edit');
+    //         return $check;
+    //     }
+
+    //     return false;
+    // }
+
     public function update(User $user, User $model)
     {
-        //
+        // dd($user->id == $model->user_id);
+        $roleJson = $user->group->permissions;
+        if (!empty($roleJson)) {
+            $roleArr = json_decode($roleJson, true);
+
+            $check = isRole($roleArr, 'users', 'edit');
+            return $check;
+        }
+
+        return false;
     }
 
     /**

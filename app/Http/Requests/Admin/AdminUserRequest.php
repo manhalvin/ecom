@@ -31,6 +31,11 @@ class AdminUserRequest extends FormRequest
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
             'role_id' => 'required',
+            'group_id' => ['required',function($attribute, $value, $fail){
+                if($value==0){
+                        $fail('Vui lòng chọn nhóm');
+                }
+            }]
         ];
     }
 
@@ -42,7 +47,7 @@ class AdminUserRequest extends FormRequest
             'name.max' => 'Họ tên có độ dài tối đa 255 ký tự.',
             'email.required' => 'Trường gmail không được để trống',
             'email.email' => 'Trường email phải là một địa chỉ email hợp lệ.',
-            'email.unique' => 'Trường email đã tồn tại trong bảng users',
+            'email.unique' => 'Email đã có người sử dụng',
             'email.min' => 'Email có độ dài ít nhất 6 ký tự.',
             'password.required' => 'Trường mật khẩu không được đê trống',
             'password_confirmation.required' => 'Xác nhận mật khẩu không được đê trống',

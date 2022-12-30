@@ -27,18 +27,21 @@
                 </a>
             </li> <br>
 
-            <li class="treeview  {{ $module_active == 'users' ? 'active' : '' }}">
-                <a href="#">
-                    <i data-feather="message-circle"></i>
-                    <span>Quản lý users</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-right pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.users.index') }}"><i class="ti-more"></i>View User</a></li>
-                </ul>
-            </li>
+            @can('users')
+                <li class="treeview  {{ $module_active == 'users' ? 'active' : '' }}">
+                    <a href="#">
+                        <i data-feather="message-circle"></i>
+                        <span>Quản lý users</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('admin.users.index') }}"><i class="ti-more"></i>View User</a></li>
+                    </ul>
+                </li>
+            @endcan
+
 
             <li class="treeview  {{ $module_active == 'roles' ? 'active' : '' }}">
                 <a href="#">
@@ -54,6 +57,20 @@
                 </ul>
             </li>
 
+            <li class="treeview  {{ $module_active == 'groups' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="message-circle"></i>
+                    <span>Quản lý groups</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.groups.index') }}"><i class="ti-more"></i>View Groups</a></li>
+                    <li><a href="{{ route('admin.groups.create') }}"><i class="ti-more"></i>Add Groups</a></li>
+                </ul>
+            </li>
+
             <li class="treeview  {{ $module_active == 'permissions' ? 'active' : '' }}">
                 <a href="#">
                     <i data-feather="message-circle"></i>
@@ -63,7 +80,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.permissions.create') }}"><i class="ti-more"></i>Add permissions</a></li>
+                    <li><a href="{{ route('admin.permissions.create') }}"><i class="ti-more"></i>Add permissions</a>
+                    </li>
                 </ul>
             </li>
 

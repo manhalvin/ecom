@@ -5,6 +5,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Tên</th>
                 <th scope="col">Email</th>
+                <th scope="col">Nhóm</th>
                 <th>Vai trò</th>
                 <th scope="col">Action</th>
             </tr>
@@ -22,18 +23,21 @@
                         <th scope="row">{{ $t }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->group->name }}</td>
                         <td>
                             @foreach ($user->roles as $role)
                                 <span class='badge badge-danger'>{{ $role->name }}</span>
                             @endforeach
                         </td>
                         <td>
-                            @can('edit_user', $user->id)
+                            {{-- @can('edit_user', $user->id)
                                 <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary btn-edit"
                                     data-id='{{ $user->id }}'>Sửa</a>
                                 <br>
-                            @endcan
-
+                            @endcan --}}
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary btn-edit"
+                                data-id='{{ $user->id }}'>Sửa</a>
+                            <br>
                             @if (Auth::id() != $user->id)
                                 <a href="{{ route('admin.users.destroy', $user->id) }}"
                                     class="btn btn-sm btn-primary btn-delete mt-2">Xóa</a>
