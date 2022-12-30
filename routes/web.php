@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +37,8 @@ Route::middleware('auth')->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('/users')->name('users.')->group(function () {
                 Route::get('/', 'index')->name('index')->middleware('can:list_user');
-                Route::get('/{user}/edit', 'edit')->name('edit');
-                Route::post('/', 'store')->name('store');
+                Route::get('/{id}/edit', 'edit')->name('edit')->middleware('can:edit_user,id');
+                Route::post('/', 'store')->name('store')->middleware('can:add_user');
                 Route::put('/{user}', 'update')->name('update');
                 Route::delete('/{user}', 'destroy')->name('destroy');
                 Route::get('/list', 'userList')->name('list');
@@ -50,6 +51,22 @@ Route::middleware('auth')->group(function () {
     Route::controller(AdminRoleController::class)->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('/roles')->name('roles.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                // Route::get('/{role}', 'show')->name('show');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::post('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::get('/list', 'roleList')->name('list');
+            });
+        });
+    });
+
+    // Route Admin: Permission
+    Route::controller(AdminPermissionController::class)->group(function () {
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::prefix('/permissions')->name('permissions.')->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');

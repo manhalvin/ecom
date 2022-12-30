@@ -28,9 +28,12 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary btn-edit"
-                                data-id='{{ $user->id }}'>Sửa</a>
-                            <br>
+                            @can('edit_user', $user->id)
+                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary btn-edit"
+                                    data-id='{{ $user->id }}'>Sửa</a>
+                                <br>
+                            @endcan
+
                             @if (Auth::id() != $user->id)
                                 <a href="{{ route('admin.users.destroy', $user->id) }}"
                                     class="btn btn-sm btn-primary btn-delete mt-2">Xóa</a>
