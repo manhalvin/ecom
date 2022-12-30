@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminUserRequest;
 use App\Http\Requests\Admin\AdminUserUpdateRequest;
+use App\Models\Group;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,11 +16,13 @@ class AdminUserController extends Controller
 {
     private $user;
     private $role;
+    private $group;
 
     public function __construct()
     {
         $this->user = new User;
         $this->role = new Role;
+        $this->group = new Group;
         $this->middleware(function ($request, $next) {
             session(['module_active' => 'users']);
             return $next($request);
@@ -30,7 +33,8 @@ class AdminUserController extends Controller
     {
         $users = $this->user->paginate(10);
         $roles = $this->role->all();
-        return view('backend.user.index', compact('users', 'roles'));
+        $groups = $this->group->all();
+        return view('backend.user.index', compact('users', 'roles', 'groups'));
     }
 
     public function store(AdminUserRequest $request)
@@ -39,6 +43,8 @@ class AdminUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'group_id' => $request->group_id,
+            'user_id' => Auth::user()->id,
         ]);
 
         $roleId = $request->input('role_id');
@@ -46,9 +52,10 @@ class AdminUserController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = $this->user->find($id);
+        $this->authorize('update', $user);
+        $user = $this->user->where('id',$user->id)->first();
         if (!$user) {
             return response()->json(
                 [
@@ -73,10 +80,14 @@ class AdminUserController extends Controller
             $this->user->find($id)->update([
                 'name' => $request->name,
                 'password' => Hash::make($request->password),
+                'group_id' => $request->group_id,
+                'user_id' => Auth::user()->id,
             ]);
         } else {
             $this->user->find($id)->update([
                 'name' => $request->name,
+                'group_id' => $request->group_id,
+                'user_id' => Auth::user()->id,
             ]);
         }
         $user = $this->user->find($id);
@@ -127,11 +138,12 @@ class AdminUserController extends Controller
         return view('backend.user.list', compact('users', 'roles'));
     }
 
-    public function userEditAjax(User $user)
+    public function userEditAjax($id)
     {
-        $user = $this->user->find($user)->first();
+        $user = $this->user->find($id);
         $rolesOfUser = $user->roles;
         $roles = $this->role->all();
-        return view('backend.user.edit',compact('user','roles','rolesOfUser'));
+        $groups = $this->group->all();
+        return view('backend.user.edit', compact('user', 'roles', 'rolesOfUser', 'groups'));
     }
 }

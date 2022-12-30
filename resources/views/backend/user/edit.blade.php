@@ -20,6 +20,19 @@
     </div>
 
     <div class="form-group ">
+        <label for="group_id">Nhóm</label> <br>
+        <select name="group_id" class="form-control" id='group_id'>
+            <option value="0">Chọn nhóm</option>
+            @if ($groups->count() > 0)
+                @foreach ($groups as $group)
+                    <option value="{{ $group->id }}" {{ $user->group_id == $group->id ? 'selected' :''}}>{{ $group->name }}</option>
+                @endforeach
+            @endif
+        </select> <br>
+        <span style='color:red' class="error group_idError"></span>
+    </div>
+
+    <div class="form-group ">
         <label for="role">Vai trò</label> <br>
         <select name="role[]" class="form-control select2_init" multiple id='rolesOfUser'>
             <option value=""></option>
@@ -45,6 +58,7 @@
         let email = $('#email').val().trim();
         let password = $('#password').val();
         let roleId = $('select[name="role[]"]').val();
+        let groupId = $('#group_id').val();
         $('.error').text('');
 
         $.ajax({
@@ -59,6 +73,7 @@
                 name: name,
                 email: email,
                 password: password,
+                group_id:groupId,
                 role: roleId,
             },
             success: function(data) {

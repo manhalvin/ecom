@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminGroupsController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,11 +36,13 @@ Route::middleware('auth')->group(function () {
 
     // Route Admin: User
     Route::controller(AdminUserController::class)->group(function () {
-        Route::prefix('admin')->name('admin.')->group(function () {
+        Route::prefix('admin')->name('admin.')->middleware('can:users')->group(function () {
             Route::prefix('/users')->name('users.')->group(function () {
-                Route::get('/', 'index')->name('index')->middleware('can:list_user');
-                Route::get('/{id}/edit', 'edit')->name('edit')->middleware('can:edit_user,id');
-                Route::post('/', 'store')->name('store')->middleware('can:add_user');
+                Route::get('/', 'index')->name('index')->can('viewAny', User::class);
+                // Route::get('/{id}/edit', 'edit')->name('edit')->can('update', User::class);
+                // Route::get('/{id}/edit', 'edit')->name('edit')->can('users.edit');
+                Route::get('/{user}/edit', 'edit')->name('edit');
+                Route::post('/', 'store')->name('store')->can('create', User::class);
                 Route::put('/{user}', 'update')->name('update');
                 Route::delete('/{user}', 'destroy')->name('destroy');
                 Route::get('/list', 'userList')->name('list');
@@ -75,6 +79,23 @@ Route::middleware('auth')->group(function () {
                 Route::post('/{id}', 'update')->name('update');
                 Route::delete('/{id}', 'destroy')->name('destroy');
                 Route::get('/list', 'roleList')->name('list');
+            });
+        });
+    });
+
+    // Route Admin: Groups
+    Route::controller(AdminGroupsController::class)->group(function () {
+        Route::prefix('admin')->name('admin.')->middleware('can:groups')->group(function () {
+            Route::prefix('/groups')->name('groups.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{group}', 'show')->name('show');
+                Route::get('/{group}/edit', 'edit')->name('edit');
+                Route::post('/{group}', 'update')->name('update');
+                Route::get('/{group}/delete', 'destroy')->name('destroy');
+                Route::get('permission/{group}', 'permission')->name('permission');
+                Route::post('permission/{group}', 'postPermission');
             });
         });
     });

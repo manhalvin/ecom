@@ -13,7 +13,10 @@
                                 </h4>
                                 <div class="row">
                                     <div class="col-md-12">
+                                        @can('create', App\Models\User::class)
                                         <a href="" class="btn btn-sm btn-primary btn-add float-right">Thêm</a>
+                                        @endcan
+
                                     </div>
                                 </div>
                             </div>
@@ -59,6 +62,19 @@
                             <label for="password-confirm">Xác nhận mật khẩu</label>
                             <input class="form-control" type="password" name="password_confirmation">
                             <span style='color:red' class="error password_confirmation_error"></span>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="group_id">Nhóm</label> <br>
+                            <select name="group_id" class="form-control">
+                                <option value="0">Chọn nhóm</option>
+                                @if ($groups->count() > 0)
+                                    @foreach ($groups as $group)
+                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select> <br>
+                            <span style='color:red' class="error group_id_error"></span>
                         </div>
 
                         <div class="form-group ">
@@ -149,6 +165,7 @@
                     let password = $('input[name="password"]').val();
                     let password_confirmation = $('input[name="password_confirmation"]').val();
                     let roleId = $('select[name="role_id[]"]').val();
+                    let groupId = $('select[name="group_id"]').val();
                     let actionUrl = $(this).attr('action');
                     let cscfToken = $(this).find('input[name="_token"]').val();
                     $('.error').text('');
@@ -162,6 +179,7 @@
                             email: email,
                             password: password,
                             password_confirmation: password_confirmation,
+                            group_id: groupId,
                             role_id: roleId,
                             _token: cscfToken
                         },
@@ -204,11 +222,9 @@
                         },
                         success: function(response) {
                             let data = response.data;
+                            $('#user-form').trigger("reset");
                             loadUserEdit(data.id);
                             $('#ajaxModel').modal('show');
-                            $('input[name="id"]').val(data.id);
-                            $('#name').val(data.name);
-                            $('#email').val(data.email);
                         },
                         error: function(error) {
                             Swal.fire({
