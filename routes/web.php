@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,17 +31,33 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-// Route Admin: User
+    // Route Admin: User
     Route::controller(AdminUserController::class)->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('/users')->name('users.')->group(function () {
-                Route::get('/', 'index')->name('index');
+                Route::get('/', 'index')->name('index')->middleware('can:list_user');
                 Route::get('/{user}/edit', 'edit')->name('edit');
                 Route::post('/', 'store')->name('store');
                 Route::put('/{user}', 'update')->name('update');
                 Route::delete('/{user}', 'destroy')->name('destroy');
                 Route::get('/list', 'userList')->name('list');
                 Route::get('/ajax/{user}/edit', 'userEditAjax')->name('edit_ajax');
+            });
+        });
+    });
+
+    // Route Admin: Role
+    Route::controller(AdminRoleController::class)->group(function () {
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::prefix('/roles')->name('roles.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                // Route::get('/{role}', 'show')->name('show');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::post('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::get('/list', 'roleList')->name('list');
             });
         });
     });

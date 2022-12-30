@@ -40,6 +40,20 @@
                 </ul>
             </li>
 
+            <li class="treeview  {{ $module_active == 'roles' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="message-circle"></i>
+                    <span>Quản lý roles</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.roles.index') }}"><i class="ti-more"></i>View Role</a></li>
+                    <li><a href="{{ route('admin.roles.create') }}"><i class="ti-more"></i>Add Role</a></li>
+                </ul>
+            </li>
+
         </ul>
     </section>
 
