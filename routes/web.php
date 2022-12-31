@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminGroupsController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +99,14 @@ Route::middleware('auth')->group(function () {
                 Route::post('permission/{group}', 'postPermission');
             });
         });
+    });
+
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::prefix('/google')->name('google.')->group(function () {
+        Route::get('/', 'loginUsingGoogle')->name('login');
+        Route::get('/callback', 'callbackFromGoogle')->name('callback');
     });
 });
 
