@@ -62,6 +62,9 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <a class="btn btn-link" href="{{ route('google.login') }}">
+                                    {{ __('Login google') }}
+                                </a>
                             </div>
                         </div>
                     </form>
