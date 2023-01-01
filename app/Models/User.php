@@ -3,11 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\HasApiTokens;
+
 // use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -37,6 +38,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $table = 'users';
     /**
      * The attributes that should be cast.
      *
@@ -71,5 +73,42 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    public function getAllUsers($filters = [], $search = null, $sortArr  = null, $perPage = null)
+    {
+        $users = User::select('users.*', 'groups.name as group_name')
+            ->join('groups', 'users.group_id', '=', 'groups.id');
+
+        $orderBy = 'users.created_at';
+        $orderType = 'desc';
+
+        if (!empty($sortArr) && is_array($sortArr)) {
+            if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
+                $orderBy = trim($sortArr['sortBy']);
+                $orderType = trim($sortArr['sortType']);
+            }
+        }
+
+        $users = $users->orderBy($orderBy, $orderType);
+
+        if (!empty($filters)) {
+            $users = $users->where($filters);
+        }
+
+        if (!empty($search)) {
+            $users = $users->where(function ($query) use ($search) {
+                $query->orWhere('users.email', 'like', '%' . $search . '%');
+                $query->orWhere('users.name', 'like', '%' . $search . '%');
+            });
+        }
+
+        if (!empty($perPage)) {
+            $users = $users->paginate($perPage)->withQueryString();
+        } else {
+            $users = $users->get();
+        }
+
+        return $users;
     }
 }

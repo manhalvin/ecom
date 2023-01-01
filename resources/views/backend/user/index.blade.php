@@ -14,10 +14,56 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         @can('create', App\Models\User::class)
-                                        <a href="" class="btn btn-sm btn-primary btn-add float-right">Thêm</a>
+                                            <a href="" class="btn btn-sm btn-primary btn-add float-right">Thêm</a>
                                         @endcan
-
                                     </div>
+                                    <form action="{{ route('admin.users.list') }}" id='user-list'>
+                                        <div class='row'>
+                                            <div class="col-3">
+                                                <input type="text" name="search" id="" class='form-control'
+                                                    placeholder="Từ khóa tìm kiếm">
+                                            </div>
+                                            <div class="col-3">
+                                                <select name="group_id" class='form-control'>
+                                                    <option value="">Tất cả nhóm </option>
+                                                    @foreach ($groups as $group)
+                                                        <option value="{{ $group->id }}"
+                                                            {{ request()->group_id == $group->id ? 'selected' : false }}>
+                                                            {{ $group->name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-3">
+                                                <select name="status" class='form-control'>
+                                                    <option value="">Tất cả trạng thái </option>
+                                                    <option value="active"
+                                                        {{ request()->status == 'active' ? 'selected' : false }}>Kích hoạt
+                                                    </option>
+                                                    <option value="unactive"
+                                                        {{ request()->status == 'unactive' ? 'selected' : false }}>Chưa kích
+                                                        hoạt</option>
+                                                </select>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input type="submit" name="btn_submit"
+                                                    class="btn btn-sm btn-primary btn-search" value='Tìm kiếm'
+                                                    id="btn_search">
+                                            </div>
+                                        </div> <br>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <select name="paginate" class='form-control' id='paginate'>
+                                                    <option value="">Chọn</option>
+                                                    <option value="1"
+                                                        {{ request()->paginate == '1' ? 'selected' : false }}>1 </option>
+                                                    <option value="2"
+                                                        {{ request()->paginate == '2' ? 'selected' : false }}>2</option>
+                                                    <option value="5"
+                                                        {{ request()->paginate == '5' ? 'selected' : false }}>5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="box-body list-user">
@@ -126,6 +172,51 @@
                     });
                 })
             }
+
+            $('#paginate').change(function() {
+                let paginate = $('select[name="paginate"]').val();
+                $.ajax({
+                    url: '{{ route('admin.users.list') }}',
+                    type: 'GET',
+                    data: {
+                        paginate: paginate
+                    },
+                    success: function(data) {
+                        $('.list-user').html(data);
+                    }
+                });
+            });
+
+
+            $(document).ready(function() {
+                $('#user-list').on('submit', function(e) {
+                    e.preventDefault();
+                    let search = $('input[name="search"]').val().trim();
+                    let groupId = $('select[name="group_id"]').val();
+                    let status = $('select[name="status"]').val();
+                    let paginate = $('select[name="paginate"]').val();
+                    let actionUrl = $(this).attr('action');
+                    let cscfToken = $(this).find('input[name="_token"]').val();
+
+                    $.ajax({
+                        url: actionUrl,
+                        type: 'GET',
+                        dataType: "html",
+                        data: {
+                            search: search,
+                            group_id: groupId,
+                            status: status,
+                            paginate: paginate,
+                            _token: cscfToken
+                        },
+                        success: function(response) {
+                            $('.list-user').html(response);
+                            // $('#user-list').trigger("reset");
+                        }
+                    })
+
+                })
+            })
 
             function loadUserEdit(id) {
                 $(document).ready(function() {

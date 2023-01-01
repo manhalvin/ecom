@@ -31,10 +31,9 @@ class AdminUserController extends Controller
 
     public function index(Request $request)
     {
-        $users = $this->user->paginate(10);
         $roles = $this->role->all();
         $groups = $this->group->all();
-        return view('backend.user.index', compact('users', 'roles', 'groups'));
+        return view('backend.user.index', compact('roles', 'groups'));
     }
 
     public function store(AdminUserRequest $request)
@@ -131,11 +130,59 @@ class AdminUserController extends Controller
 
     }
 
-    public function userList()
+    public function userList(Request $request)
     {
-        $users = $this->user->paginate(10);
+        $filters = [];
+        $search = null;
+        if(!empty($request->status)){
+            $status = $request->status;
+            if($status == 'active'){
+                $status = 1;
+            }else{
+                $status = 0;
+            }
+
+            $filters[] = ['users.status', '=', $status];
+        }
+
+        if(!empty($request->group_id)){
+            $groupId = $request->group_id;
+            $filters[] = ['users.group_id', '=', $groupId];
+        }
+
+        if(!empty($request->search)){
+            $search = $request->search;
+        }
+
+        if(!empty($request->paginate)){
+            $paginate = $request->paginate;
+        }else{
+            $paginate = 2;
+        }
+
+        $sortType = $request->sortType;
+        $sortBy = $request->sortBy;
+        $allowSort = ['asc', 'desc'];
+
+        if(!empty($sortType) && in_array($sortType, $allowSort)){
+            if($sortType =='desc'){
+                $sortType = 'asc';
+            }else{
+                $sortType = 'desc';
+            }
+        }else{
+            $sortType = 'asc';
+        }
+
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType
+        ];
+
+
+        $users = $this->user->getAllUsers($filters, $search, $sortArr, $paginate);
         $roles = $this->role->all();
-        return view('backend.user.list', compact('users', 'roles'));
+        return view('backend.user.list', compact('users', 'roles','sortType'));
     }
 
     public function userEditAjax($id)
