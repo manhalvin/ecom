@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminGroupsController;
-use App\Http\Controllers\Admin\AdminPermissionController;
-use App\Http\Controllers\Admin\AdminRoleController;
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Auth\AuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\API\NexmoSMSController;
+use App\Http\Controllers\Admin\AdminRoleController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminGroupsController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminPermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,4 +117,14 @@ Route::controller(AuthController::class)->group(function () {
     });
 });
 
-Auth::routes(['register' => false]);
+// Auth::routes(['register' => false]);
+Auth::routes();
+
+Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(function(){
+    Route::get('otp/login', 'login')->name('otp.login');
+    Route::post('otp/generate', 'generate')->name('otp.generate');
+    Route::get('otp/verification/{user_id}', 'verification')->name('otp.verification');
+    Route::post('otp/login', 'loginWithOtp')->name('otp.getlogin');
+});
+
+Route::get('sendSMS', [NexmoSMSController::class, 'index']);

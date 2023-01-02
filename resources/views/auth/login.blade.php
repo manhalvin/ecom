@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -57,12 +56,18 @@
                                     {{ __('Login') }}
                                 </button>
 
+                                OR
+
+                                <a class="btn btn-success" href="{{ route('otp.login') }}">
+                                    Login with OTP
+                                </a>
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-                                <a class="btn btn-link" href="{{ route('google.login') }}">
+                                <a class="btn btn-link btn-success" href="{{ route('google.login') }}">
                                     {{ __('Login google') }}
                                 </a>
                             </div>
