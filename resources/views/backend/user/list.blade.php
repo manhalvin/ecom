@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Facades\Input;
+@endphp
 <div class="table-responsive">
     <table class="table table-dark table-bordered border-primary text-white" id='tableCategoryBook'>
         <thead>
@@ -11,7 +14,7 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="sortable">
             @php
                 $t = 0;
             @endphp
@@ -20,7 +23,7 @@
                     @php
                         $t++;
                     @endphp
-                    <tr>
+                    <tr id='{{ $user->id }}'>
                         <th scope="row">{{ $t }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
@@ -59,7 +62,8 @@
             @endif
         </tbody>
     </table>
-    {{ $users->links() }}
+    {{ $users->withQueryString()->links() }}
+    {{-- {{ $users->links() }} --}}
 </div>
 <script>
     const endpoint = "https://quocmanh.com/Laravel/Auth/admin/users/list";
@@ -118,4 +122,40 @@
             }
         });
     }
+</script>
+
+<script>
+    $(function() {
+        $("#sortable").sortable({
+            placeholder: 'ui-state-highlight',
+            update: function(event, ui) {
+                let array_id = [];
+                $("#sortable tr").each(function() {
+                    array_id.push($(this).attr('id'));
+                })
+
+
+                $.ajax({
+                    url: '{{ route('admin.users.list') }}',
+                    type: 'POST',
+                    dataType: "html",
+                    data: {array_id:array_id},
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        $('.list-user').html(data);
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Sắp xếp người dùng không thành công',
+                            icon: 'error',
+                            confirmBbuttonText: 'Cool'
+                        })
+                    }
+                })
+            }
+        });
+    });
 </script>
