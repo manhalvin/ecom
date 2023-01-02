@@ -7,7 +7,7 @@
 
         <div class="user-profile">
             <div class="ulogo">
-                <a href="index.html">
+                <a href="{{ route('admin.dashboard.index') }}">
                     <!-- logo for regular state and mobile devices -->
                     <div class="d-flex align-items-center justify-content-center">
                         <img src="{{ asset('backend/images/logo-dark.png') }}" alt="">
@@ -22,7 +22,7 @@
 
             <li class="treeview {{ $module_active == 'dashboard' ? 'active' : '' }}">
                 <a href="{{ route('admin.dashboard.index') }}">
-                    <i data-feather="pie-chart"></i>
+                    <i data-feather="message-circle"></i>
                     <span>Dashboard</span>
                 </a>
             </li> <br>
@@ -31,13 +31,13 @@
                 <li class="treeview  {{ $module_active == 'users' ? 'active' : '' }}">
                     <a href="#">
                         <i data-feather="message-circle"></i>
-                        <span>Quản lý users</span>
+                        <span>Quản lý người dùng</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-right pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ route('admin.users.index') }}"><i class="ti-more"></i>View User</a></li>
+                        <li><a href="{{ route('admin.users.index') }}"><i class="ti-more"></i>Danh sách</a></li>
                     </ul>
                 </li>
             @endcan
@@ -46,28 +46,28 @@
             <li class="treeview  {{ $module_active == 'roles' ? 'active' : '' }}">
                 <a href="#">
                     <i data-feather="message-circle"></i>
-                    <span>Quản lý roles</span>
+                    <span>Quản lý vai trò </span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-right pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.roles.index') }}"><i class="ti-more"></i>View Role</a></li>
-                    <li><a href="{{ route('admin.roles.create') }}"><i class="ti-more"></i>Add Role</a></li>
+                    <li><a href="{{ route('admin.roles.index') }}"><i class="ti-more"></i>Danh sách vai trò</a></li>
+                    <li><a href="{{ route('admin.roles.create') }}"><i class="ti-more"></i>Thêm vai trò</a></li>
                 </ul>
             </li>
 
             <li class="treeview  {{ $module_active == 'groups' ? 'active' : '' }}">
                 <a href="#">
                     <i data-feather="message-circle"></i>
-                    <span>Quản lý groups</span>
+                    <span>Quản lý nhóm</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-right pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.groups.index') }}"><i class="ti-more"></i>View Groups</a></li>
-                    <li><a href="{{ route('admin.groups.create') }}"><i class="ti-more"></i>Add Groups</a></li>
+                    <li><a href="{{ route('admin.groups.index') }}"><i class="ti-more"></i>Danh sách nhóm</a></li>
+                    <li><a href="{{ route('admin.groups.create') }}"><i class="ti-more"></i>Thêm nhóm</a></li>
                 </ul>
             </li>
 
@@ -80,7 +80,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.permissions.create') }}"><i class="ti-more"></i>Add permissions</a>
+                    <li><a href="{{ route('admin.permissions.create') }}"><i class="ti-more"></i>Thêm quyền</a>
                     </li>
                 </ul>
             </li>

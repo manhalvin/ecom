@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AdminUserRequest;
-use App\Http\Requests\Admin\AdminUserUpdateRequest;
-use App\Models\Group;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Ward;
+use App\Models\Group;
+use App\Models\District;
+use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Admin\AdminUserRequest;
+use App\Http\Requests\Admin\AdminUserUpdateRequest;
+use App\Models\Country;
 
 class AdminUserController extends Controller
 {
@@ -29,11 +33,25 @@ class AdminUserController extends Controller
         });
     }
 
+    public function GetDistricts($province_id)
+    {
+        $district = District::where('province_id', $province_id)->orderBy('name', 'DESC')->get();
+        return json_encode($district);
+    }
+
+    public function GetWards($dsistrict_id)
+    {
+        $ward = Ward::where('district_id', $dsistrict_id)->orderBy('name', 'DESC')->get();
+        return json_encode($ward);
+    }
+
     public function index(Request $request)
     {
         $roles = $this->role->all();
         $groups = $this->group->all();
-        return view('backend.user.index', compact('roles', 'groups'));
+        $provinces = Province::all();
+        $countries = Country::all();
+        return view('backend.user.index', compact('roles', 'groups', 'provinces', 'countries'));
     }
 
     public function store(AdminUserRequest $request)
@@ -54,7 +72,7 @@ class AdminUserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-        $user = $this->user->where('id',$user->id)->first();
+        $user = $this->user->where('id', $user->id)->first();
         if (!$user) {
             return response()->json(
                 [
@@ -134,55 +152,54 @@ class AdminUserController extends Controller
     {
         $filters = [];
         $search = null;
-        if(!empty($request->status)){
+        if (!empty($request->status)) {
             $status = $request->status;
-            if($status == 'active'){
+            if ($status == 'active') {
                 $status = 1;
-            }else{
+            } else {
                 $status = 0;
             }
 
             $filters[] = ['users.status', '=', $status];
         }
 
-        if(!empty($request->group_id)){
+        if (!empty($request->group_id)) {
             $groupId = $request->group_id;
             $filters[] = ['users.group_id', '=', $groupId];
         }
 
-        if(!empty($request->search)){
+        if (!empty($request->search)) {
             $search = $request->search;
         }
 
-        if(!empty($request->paginate)){
+        if (!empty($request->paginate)) {
             $paginate = $request->paginate;
-        }else{
-            $paginate = 2;
+        } else {
+            $paginate = 15;
         }
 
         $sortType = $request->sortType;
         $sortBy = $request->sortBy;
         $allowSort = ['asc', 'desc'];
 
-        if(!empty($sortType) && in_array($sortType, $allowSort)){
-            if($sortType =='desc'){
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
                 $sortType = 'asc';
-            }else{
+            } else {
                 $sortType = 'desc';
             }
-        }else{
+        } else {
             $sortType = 'asc';
         }
 
         $sortArr = [
             'sortBy' => $sortBy,
-            'sortType' => $sortType
+            'sortType' => $sortType,
         ];
-
 
         $users = $this->user->getAllUsers($filters, $search, $sortArr, $paginate);
         $roles = $this->role->all();
-        return view('backend.user.list', compact('users', 'roles','sortType'));
+        return view('backend.user.list', compact('users', 'roles', 'sortType'));
     }
 
     public function userEditAjax($id)
@@ -191,6 +208,7 @@ class AdminUserController extends Controller
         $rolesOfUser = $user->roles;
         $roles = $this->role->all();
         $groups = $this->group->all();
-        return view('backend.user.edit', compact('user', 'roles', 'rolesOfUser', 'groups'));
+        $provinces = Province::all();
+        return view('backend.user.edit', compact('user', 'roles', 'rolesOfUser', 'groups', 'provinces'));
     }
 }
