@@ -220,6 +220,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Socialite' =>
         Laravel\Socialite\Facades\Socialite::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
     ])->toArray(),
 
 ];

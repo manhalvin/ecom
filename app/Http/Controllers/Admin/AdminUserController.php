@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Ward;
-use App\Models\Group;
-use App\Models\District;
-use App\Models\Province;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\AdminUserRequest;
 use App\Http\Requests\Admin\AdminUserUpdateRequest;
 use App\Models\Country;
+use App\Models\District;
+use App\Models\Group;
+use App\Models\Province;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Ward;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
@@ -148,8 +148,33 @@ class AdminUserController extends Controller
 
     }
 
+    public function resort(Request $request)
+    {
+        $data = $request->all();
+        foreach ($data['array_id'] as $k => $v) {
+            $user = User::find($v);
+            $user->position = $k;
+            $user->save();
+        }
+        return response()->json(
+            [
+                'data' => $user,
+                'status_code' => 200,
+                'message' => 'Sắp xếp người dùng thành công',
+            ]
+        );
+    }
+
     public function userList(Request $request)
     {
+        if (!empty($request->input('array_id'))) {
+            foreach ($request->input('array_id') as $k => $v) {
+                $user = User::find($v);
+                $user->position = $k;
+                $user->save();
+            }
+        }
+
         $filters = [];
         $search = null;
         if (!empty($request->status)) {

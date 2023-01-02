@@ -80,8 +80,8 @@ class User extends Authenticatable
         $users = User::select('users.*', 'groups.name as group_name')
             ->join('groups', 'users.group_id', '=', 'groups.id');
 
-        $orderBy = 'users.created_at';
-        $orderType = 'desc';
+        $orderBy = 'users.position';
+        $orderType = 'asc';
 
         if (!empty($sortArr) && is_array($sortArr)) {
             if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {

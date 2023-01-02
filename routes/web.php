@@ -47,11 +47,13 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{user}', 'update')->name('update');
                 Route::delete('/{user}', 'destroy')->name('destroy');
                 Route::get('/list', 'userList')->name('list');
+                Route::post('/list', 'userList')->name('list');
                 Route::get('/ajax/{user}/edit', 'userEditAjax')->name('edit_ajax');
                 Route::get('districts/ajax/{province_id}', 'GetDistricts');
                 Route::get('wards/ajax/{province_id}','GetWards');
                 Route::post('districts/ajax/{province_id}', 'GetDistricts');
                 Route::post('wards/ajax/{province_id}','GetWards');
+                Route::post('/resort', 'resort')->name('resort');
             });
         });
     });
