@@ -25,7 +25,8 @@
             <option value="0">Chọn nhóm</option>
             @if ($groups->count() > 0)
                 @foreach ($groups as $group)
-                    <option value="{{ $group->id }}" {{ $user->group_id == $group->id ? 'selected' :''}}>{{ $group->name }}</option>
+                    <option value="{{ $group->id }}" {{ $user->group_id == $group->id ? 'selected' : '' }}>
+                        {{ $group->name }}</option>
                 @endforeach
             @endif
         </select> <br>
@@ -36,16 +37,20 @@
         <label for="role">Vai trò</label> <br>
         <select name="role[]" class="form-control select2_init" multiple id='rolesOfUser'>
             <option value=""></option>
-            @foreach ($roles as $role)
-                <option {{ $rolesOfUser->contains('id', $role->id) ? 'selected' : '' }} value="{{ $role->id }}">
-                    {{ $role->name }}</option>
-            @endforeach
+            @if ($groups->count() > 0)
+                @foreach ($roles as $role)
+                    <option {{ $rolesOfUser->contains('id', $role->id) ? 'selected' : '' }} value="{{ $role->id }}">
+                        {{ $role->name }}</option>
+                @endforeach
+            @endif
         </select> <br>
         <span style='color:red' class="error roleError"></span>
     </div> <br>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    let point = "https://quocmanh.com/Laravel/Auth/admin/users";
+
     $(document).ready(function() {
         $('.select2_init').select2();
     });
@@ -62,8 +67,7 @@
         $('.error').text('');
 
         $.ajax({
-            url: "https://quocmanh.com/Laravel/Auth/admin/users" + '/' +
-                id,
+            url: `${point}/${id}`,
             type: "PUT",
             dataType: 'json',
             headers: {
@@ -73,7 +77,7 @@
                 name: name,
                 email: email,
                 password: password,
-                group_id:groupId,
+                group_id: groupId,
                 role: roleId,
             },
             success: function(data) {

@@ -30,6 +30,9 @@ class AdminUserRequest extends FormRequest
             'email' => 'required|min:6|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
+            'province' => 'required',
+            'district' => 'required',
+            'ward' => 'required',
             'role_id' => 'required',
             'group_id' => ['required',function($attribute, $value, $fail){
                 if($value==0){
@@ -54,6 +57,9 @@ class AdminUserRequest extends FormRequest
             'password.min' => 'Mật khẩu có độ dài ít nhất 6 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu không thành công.',
             'role_id.required' => 'Vai trò bắt buộc phải chọn',
+            'province.required' => 'Tỉnh bắt buộc phải chọn',
+            'district.required' => 'Quận bắt buộc phải chọn',
+            'ward.required' => 'Phường bắt buộc phải chọn'
         ];
     }
 
