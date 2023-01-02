@@ -110,8 +110,8 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src='//cdn.datatables.net/plug-ins/1.13.1/i18n/vi.json'></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src='https://cdn.datatables.net/plug-ins/1.13.1/i18n/vi.json'></script>
     @yield('js')
 
 

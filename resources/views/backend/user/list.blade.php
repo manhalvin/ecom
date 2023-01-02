@@ -41,9 +41,10 @@
                                     data-id='{{ $user->id }}'>Sửa</a>
                                 <br>
                             @endcan --}}
-                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary btn-edit"
-                                data-id='{{ $user->id }}'>Sửa</a>
-                            <br>
+                            @if (Auth::id() != $user->id)
+                                <a href="{{ route('admin.users.edit', $user->id) }}"
+                                    class="btn btn-sm btn-primary btn-edit" data-id='{{ $user->id }}'>Sửa</a>
+                            @endif
                             @if (Auth::id() != $user->id)
                                 <a href="{{ route('admin.users.destroy', $user->id) }}"
                                     class="btn btn-sm btn-primary btn-delete mt-2">Xóa</a>
@@ -53,7 +54,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="5" style="text-align: center">Không có bản ghi nào !</td>
+                    <td colspan="7" style="text-align: center">Không có bản ghi nào !</td>
                 </tr>
             @endif
         </tbody>
@@ -61,6 +62,8 @@
     {{ $users->links() }}
 </div>
 <script>
+    const endpoint = "https://quocmanh.com/Laravel/Auth/admin/users/list";
+
     $(document).ready(function() {
         $('#tableCategoryBook').DataTable({
             "language": {
@@ -85,12 +88,12 @@
 
         $.ajax({
             type: 'GET',
-            url: '{{ route('admin.users.list') }}',
+            url: `${endpoint}`,
             data: {
                 sortBy: sortBy,
                 sortType: sortType
             },
-            dataType: 'HTML',
+            dataType: 'html',
             success: function(data) {
                 $('.list-user').html(data);
             }
@@ -100,14 +103,14 @@
     $(document).ready(function() {
         $('.pagination a').on('click', function(e) {
             e.preventDefault();
-            var page = $(this).attr('href').split('page=')[1];
+            let page = $(this).attr('href').split('page=')[1];
             getData(page);
         });
     });
 
     function getData(page) {
         $.ajax({
-            url: 'https://quocmanh.com/Laravel/Auth/admin/users/list?page=' + page,
+            url: `${endpoint}?page=${page}`,
             type: 'get',
             dataType: 'html',
             success: function(data) {

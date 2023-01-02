@@ -26,7 +26,8 @@ class AuthController extends Controller
         $provider = 'google';
 
         $user = User::where('provider', $provider)
-            ->where('provider_id', $providerId)->first();
+            ->where('email', $userGoogle->getEmail())
+            ->first();
 
         if (!$user) {
             $user = new User();
@@ -37,6 +38,13 @@ class AuthController extends Controller
             $user->group_id = 1;
             $user->password = Hash::make('123456789');
             $user->save();
+        } else {
+            $userProviderId = User::where('provider_id', $providerId)->first();
+            if (!$userProviderId) {
+                User::where('provider', $provider)
+                    ->where('email', $userGoogle->getEmail())
+                    ->update(['provider_id' => $providerId]);
+            }
         }
 
         $userId = $user->id;
@@ -198,7 +206,7 @@ class AuthController extends Controller
 
             $response = Http::asForm()->post('/oauth/token', [
                 'grant_type' => 'refresh_token',
-                'refresh_token' =>  $refreshToken,
+                'refresh_token' => $refreshToken,
                 'client_id' => $clientId,
                 'client_secret' => $clientSecret,
                 'scope' => '',

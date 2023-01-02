@@ -25,42 +25,64 @@
                         <div class="box">
                             <div class="box-header">
                                 <h4 class="box-title align-items-start flex-column">
-                                    New Arrivals
-                                    <small class="subtitle">More than 400+ new members</small>
+                                    Danh sách người dùng
                                 </h4>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table class="table table-dark table-bordered border-primary text-white">
+                                    <table class="table table-dark table-bordered border-primary text-white" id='user'>
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">First</th>
-                                                <th scope="col">Last</th>
-                                                <th scope="col">Handle</th>
+                                                <th scope="col"><a href="#" id="link">Tên</a></th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Trạng thái</th>
+                                                <th>Vai trò</th>
+                                                <th>Status</th>
+                                                <th>Last Seen</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
+                                            @php
+                                                $t = 0;
+                                            @endphp
+                                            @if ($users->count() > 0)
+                                                @foreach ($users as $user)
+                                                    @php
+                                                        $t++;
+                                                    @endphp
+                                                    <tr>
+                                                        <th scope="row">{{ $t }}</th>
+                                                        <td>{{ $user->name }}</td>
+                                                        <td>{{ $user->email }}</td>
+                                                        <td>
+                                                            {!! $user->status == 0
+                                                                ? '<button class="btn-danger btn btn-sm">Chưa kích hoạt</button>'
+                                                                : '<button class="btn-success btn btn-sm">Kích hoạt</button>' !!}
+                                                        </td>
+                                                        <td>
+                                                            @foreach ($user->roles as $role)
+                                                                <span class='badge badge-danger'>{{ $role->name }}</span>
+                                                            @endforeach
+                                                        </td>
+                                                        <td>
+                                                            @if(Cache::has('is_online' . $user->id))
+                                                                <span class="text-success">Online</span>
+                                                            @else
+                                                                <span class="text-secondary">Offline</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse($user->last_seen)->diffForHumans() }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="7" style="text-align: center">Không có bản ghi nào !</td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -70,4 +92,15 @@
             <!-- /.content -->
         </div>
     </div>
+@endsection
+@section('js')
+<script>;
+    $(document).ready(function() {
+        $('#user').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/vi.json"
+            }
+        });
+    });
+</script>
 @endsection
