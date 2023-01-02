@@ -18,7 +18,8 @@
         "laravelcollective/html": "^6.3",
         "laravolt/avatar": "^4.1",
         "maatwebsite/excel": "^3.1",
-        "psr/simple-cache": "2.0"
+        "psr/simple-cache": "2.0",
+        "twilio/sdk": "^6.44"
     },
     "require-dev": {
         "dipeshsukhia/laravel-country-state-city-data": "^2.0",
