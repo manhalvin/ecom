@@ -14,11 +14,22 @@
                                         {{ session('status') }}
                                     </div>
                                 @endif
-                                <h4 class="box-title align-items-start flex-column">
-                                    Danh sách role
+                                <h4 class="box-title align-items-start flex-column mb-2">
+                                    Danh sách vai trò
                                 </h4>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id='txtSearch' placeholder="Tìm kiếm"
+                                                onkeyup="searchFilter();">
+                                            <select class="form-control ml-5" id="filterBy" onchange="searchFilter();">
+                                                <option value="">Trạng thái</option>
+                                                <option value="active">Kích hoạt</option>
+                                                <option value="unactive">Chưa kích hoạt</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <a href="" class="btn btn-sm btn-primary btn-add float-right">Thêm</a>
                                     </div>
                                 </div>

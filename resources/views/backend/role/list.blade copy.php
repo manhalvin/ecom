@@ -1,17 +1,14 @@
-<p>Tổng tất cả: {{ $allRoleNum }} bản ghi</p>
-<p>Hiện tại có: {{ $roleCount }} bản ghi ở trang {{ $page }}</p>
-<table class="table table-dark table-bordered border-primary text-white">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tên vai trò </th>
-            <th scope="col">Mô tả vai trò</th>
-            <th>Trạng thái</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if ($roles->count() > 0)
+<div class="table-responsive">
+    <table class="table table-dark table-bordered border-primary text-white">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên vai trò </th>
+                <th scope="col">Mô tả vai trò</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
             @php
                 $t = 0;
             @endphp
@@ -23,9 +20,6 @@
                     <th scope="row">{{ $t }}</th>
                     <td>{{ $role->name }}</td>
                     <td>{{ $role->display_name }}</td>
-                    <td>{!! $role->status == 0 ? '<a href="#"
-                        class="btn btn-sm btn-danger">Chưa kích hoạt</a>' : '<a href="#"
-                        class="btn btn-sm btn-primary">Kích hoạt</a>' !!}</td>
                     <td>
                         <a href="{{ route('admin.roles.edit', $role->id) }}"
                             class="btn btn-sm btn-primary btn-edit">Sửa</a>
@@ -35,17 +29,10 @@
                     </td>
                 </tr>
             @endforeach
-        @else
-                <tr>
-                    <td colspan="5">
-                        <p class='text-center'>Không tìm thấy bản ghi nào !</p>
-                    </td>
-                </tr>
-        @endif
-    </tbody>
+        </tbody>
 
-</table>
-@if ($roleCount)
+    </table>
+</div>
 <nav aria-label="Page navigation example">
     <ul class="pagination">
         <?php
@@ -79,37 +66,17 @@
         ?>
     </ul>
 </nav>
-@endif
-
 {{-- {{ $roles->links() }} --}}
-<script>
-    function searchFilter(page) {
-        let search = $('#txtSearch').val();
-        let filterBy = $('#filterBy').val();
-        $(document).ready(function() {
-            $.ajax({
-                url: '{{ route('admin.roles.list') }}?page=' + page,
-                data: {
-                    search: search,
-                    status: filterBy
-                },
-                type: 'get',
-                dataType: 'html',
-                success: function(data) {
-                    $('.list-role').html(data);
-                    $('#txtSearch').trigger("reset");
-                }
-            });
-        })
-    }
-</script>
 
 <script>
-    function loadRole(page) {
+    function loadRole(page, search) {
         $(document).ready(function() {
             $.ajax({
-                url: '{{ route('admin.roles.list') }}?page=' + page,
-                type: 'get',
+                url: "{{ route('admin.roles.list') }}?page=" + page,
+                type: 'GET',
+                data: {
+                    search: search
+                },
                 dataType: 'html',
                 success: function(data) {
                     $('.list-role').html(data);
@@ -121,8 +88,24 @@
     $(document).ready(function() {
         $('.pagination a').on('click', function(e) {
             e.preventDefault();
-            let page = $(this).attr('href').split('page=')[1];
-            loadRole(page);
+            let page = $('.pagination a').attr('href').split('page=')[1];
+
+            loadRole(page, $('#txtSearch').val());
         });
     });
+
+    // function pagination(search) {
+
+    //     $.ajax({
+    //         url: '{{ route('admin.roles.list') }}?page=' + page,
+    //         type: 'GET',
+    //         data: {
+    //             search: search
+    //         },
+    //         dataType: 'html',
+    //         success: function(data) {
+    //             $('.list-role').html(data);
+    //         }
+    //     });
+    // }
 </script>
