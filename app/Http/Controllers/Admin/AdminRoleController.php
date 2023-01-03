@@ -27,10 +27,62 @@ class AdminRoleController extends Controller
         return view('backend.role.index');
     }
 
-    public function roleList()
+    public function roleList(Request $request)
     {
-        $roles = $this->role->paginate(2);
-        return view('backend.role.list', compact('roles'));
+        // Xử lý phân trang
+        $allRoleNum = $this->role->all()->count();
+        $search = "";
+        $filters = [];
+
+        // 1. Xác định được số lượng bản ghi trên 1 trang
+        $perPage = 3;
+        // 2. Tính số trang
+        $maxPage = ceil($allRoleNum / $perPage);
+
+        // 3. Xử lý sô trang dựa vào phương thức GET
+        if (!empty($request->input('page'))) {
+            $page = $request->input('page');
+            if ($page < 1 || $page > $maxPage) {
+                $page = 1;
+            }
+        } else {
+            $page = 1;
+        }
+
+        // 4. Tính toán offset trong limit dựa vào biến $page
+        $offset = ($page - 1) * $perPage;
+
+        if (!empty($request->status)) {
+            $status = $request->status;
+            if ($status == 'active') {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+
+            $filters[] = ['status', '=', $status];
+        }
+
+        $roles = $this->role->orderBy('created_at', 'asc');
+
+        if (!empty($filters)) {
+            $roles = $roles->where($filters);
+        }
+
+        if ($request->search) {
+            $search = $request->search;
+        }
+
+        $roles = $roles->where(function ($query) use ($search) {
+            $query->orWhere('name', 'like', '%' . $search . '%');
+        })
+            ->offset($offset)
+            ->limit($perPage)
+            ->get();
+
+        $roleCount = $roles->count();
+
+        return view('backend.role.list', compact('roles', 'maxPage', 'page', 'roleCount', 'allRoleNum'));
     }
 
     public function create()
