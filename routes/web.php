@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminGroupsController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Demo\DemoCartController;
+use App\Http\Controllers\Demo\DemoPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +129,8 @@ Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(fun
     Route::post('otp/login', 'loginWithOtp')->name('otp.getlogin');
 });
 
+
+// Demo route shop cart
 Route::get('sendSMS', [NexmoSMSController::class, 'index']);
 Route::get('demo/cart/add/{id}', [DemoCartController::class, 'add']);
 Route::get('demo/cart/delete/{id}', [DemoCartController::class, 'delete'])->name('demo.cart.delete');
@@ -136,3 +139,7 @@ Route::post('demo/cart/update/ajax', [DemoCartController::class, 'updateAjax'])-
 Route::get('demo/cart/delete/', [DemoCartController::class, 'deleteAll'])->name('demo.cart.delete_all');
 // Route::get('demo/cart/updateInfo', [DemoCartController::class, 'updateInfoCart']);
 Route::get('demo/cart/', [DemoCartController::class, 'index'])->name('demo.cart.index');
+
+// Demo route: multi level menu post (menu đa cấp)
+Route::get('demo/post/', [DemoPostController::class, 'index'])->name('demo.post.index');
+Route::get('demo/post/create', [DemoPostController::class, 'create'])->name('demo.post.index');
