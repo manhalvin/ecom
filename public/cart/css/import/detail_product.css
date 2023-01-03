@@ -1,0 +1,75 @@
+/*DETAIL PRODUCT*/
+#info-product-wp{ padding-top: 30px;}
+#info-product-wp .thumb{ width: 35%;}
+#info-product-wp .detail{ width: 65%; padding-left: 30px;}
+#info-product-wp .detail .title{
+    display: block;
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+    font-size: 21px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #bfbfbf;
+}
+#info-product-wp .detail .price{
+    font-size: 24px;
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+    color: #b50000;
+    padding-bottom: 10px;
+    line-height: 21px;
+}
+.product-code{ 
+    color: #555;
+    margin-bottom: 15px;
+}
+.product-code span, .desc-short h5{
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+    color: #444;
+    line-height: 21px;
+}
+.desc-short p{
+    color: #555;
+    text-align: justify;
+    margin: 10px 0px 20px 0px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -moz-line-clamp: 3;
+    -o-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -o-box-orient: vertical;
+    max-height: 100%;
+    overflow: hidden;
+    line-height: 21px;
+}
+.num-order-wp{ padding-bottom: 20px;}
+.num-order-wp span{ color: #555;}
+.num-order-wp #num-order{
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border: 1px solid #bbb;
+    color: #444;
+    border-radius: 3px;
+    font-size: 15px;
+}
+.add-to-cart{
+    display: inline-block;
+    padding: 7px 15px;
+    background: #3a9800;
+    color: #fff!important;
+    font-size: 13px;
+    margin-left: 15px;
+    border-radius: 3px;
+}
+.add-to-cart:hover{ background: #318000;}
+#desc-wp .section-title{ padding-bottom: 10px;}
+#desc-wp .section-detail p{
+    text-align: justify;
+    padding-bottom: 10px;
+    color: #444;
+}

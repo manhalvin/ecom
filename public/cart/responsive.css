@@ -1,0 +1,74 @@
+/*RESPONSIVE*/
+@media screen and (max-width: 1170px){
+    .wp-inner{ width: 100%;}
+}
+
+@media screen and (max-width: 1024px){
+    /*GLOBAL*/
+    #sidebar{ display: none;}
+    #content{ border-left: none; padding: 0px; width: 100%;}
+    #container .wp-inner{ padding: 0px 10px;}
+    #menu-respon{ display: block;}
+    #btn-respon{ font-size: 21px; padding: 20px 0px 20px 10px; cursor: pointer; color: #444;}
+    #search-wp .btn{ display: none;}
+    #site{ position: relative; overflow: hidden;}
+    #container{ position: relative; right: 0px; transition: all .5s ease; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -o-transition: all .5s ease;}
+    #menu-respon{  position: absolute; top: 0; right: -250px; width: 250px; height: 100%; background: #ddd; transition: all .5s ease; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; -o-transition: all .5s ease;}
+    #site.show-respon-menu #container{ right: 250px;}
+    #site.show-respon-menu #menu-respon{ right: 0;}
+    #main-menu-respon .sub-menu{ display: none;}
+    #menu-respon .logo{ display: block; padding: 20px 0px; color: #07ADC6; text-align: center; text-transform: uppercase; font-family: 'Roboto Bold'; font-size: 21px;}
+    #menu-respon .logo img{ display: inline-block;}
+    #main-menu-respon li{ position: relative;}
+    #main-menu-respon li a{ display: block; padding: 15px 25px; color: #000; line-height: normal; text-transform: uppercase; border-top: 1px solid #fff; border-bottom: 1px solid #979797;}
+    #main-menu-respon li:first-child a{ border-top: none; }
+    #main-menu-respon li:last-child a{ border-bottom: none; }
+    #main-menu-respon > li:hover > a, #main-menu-respon .sub-menu li a:hover{ background-color: #cacaca;}
+    #main-menu-respon li .arrow{ position: absolute; top: 0px; right: 0px; padding: 17px; cursor: pointer;}
+    #main-menu-respon li.open .arrow{ transform: rotate(90deg); -moz-transform: rotate(90deg); -webkit-transform: rotate(90deg); -o-transform: rotate(90deg); -ms-transform: rotate(90deg);}
+    
+    /*HEADER*/
+    #btn-respon{ display: block;}
+    #logo{ padding: 20px 0px;}
+    
+    /*FOOTER*/
+    #copyright{ text-align: center;}
+}
+
+@media screen and (max-width: 800px){
+
+}   
+
+@media screen and (max-width: 768px){
+
+}
+
+@media screen and (max-width: 600px){
+    /*HOME*/
+    .list-cat .list-item li{ width: 49%;}
+    .list-cat .list-item li:nth-child(2n){ margin-right: 0;}
+    
+    /*DETAIL PRODUCT*/
+    #info-product-wp .detail .title{ line-height: 30px;}
+    
+    /*CHECKOUT*/
+    #custom-info-wp, #order-review-wp{ width: 100%; padding-right: 0;}
+    #custom-info-wp{ margin-bottom: 30px;}
+    .place-order-wp button{ margin-bottom: 20px;}
+}
+@media screen and (max-width: 568px){
+
+}
+
+@media screen and (max-width: 320px){
+    /*HOME*/
+    .list-cat .list-item li{ width: 100%; margin-right: 0; margin-bottom: 8%;}
+    .list-cat .list-item li .title{ font-size: 16px;}
+    
+    /*DETAIL PRODUCT*/
+    #info-product-wp .thumb, #info-product-wp .detail{ width: 100%; padding-left: 0;}
+    #info-product-wp .detail .title{ font-size: 20px; line-height: 26px; padding-top: 20px;}
+    
+    /*CHECKOUT*/
+    .field-wp{ float: none; width: 100%; margin-bottom: 4%;}
+}
