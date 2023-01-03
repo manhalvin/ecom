@@ -1,0 +1,32 @@
+/*CATEGORY PRODUCT*/
+.category-product-page .section-title{ padding-bottom: 10px;}
+.section-desc{
+    font-size: 13px;
+    line-height: 18px;
+    color: #666;
+    padding-bottom: 20px;
+}
+#pagenavi-wp{ text-align: center; padding-bottom: 50px;}
+#pagenavi-wp .name{
+    display: inline-block;
+    font-size: 13px;
+    padding-right: 10px;
+    color: #0b0b0b;
+}
+#pagenavi-wp a{
+    display: inline-block;
+    color: #0b0b0b;
+    font-size: 13px;
+    border: 1px solid #d6d1d1;
+    padding: 5px 12px;
+}
+#pagenavi-wp #list-pagenavi{ display: inline-block;}
+#pagenavi-wp #list-pagenavi li{ display: inline-block;}
+#pagenavi-wp #list-pagenavi li a{
+    display: inline-block;
+    color: #0b0b0b;
+    font-size: 13px;
+    border: 1px solid #d6d1d1;
+    padding: 5px 12px;
+}
+#pagenavi-wp #list-pagenavi li.active a, #pagenavi-wp #list-pagenavi li:hover a, #pagenavi-wp .section-detail > a:hover{ background: #b3b3b3;; color: #fff; border:1px solid #b3b3b3;}

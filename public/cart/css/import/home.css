@@ -1,0 +1,47 @@
+/*MAIN CONTENT*/
+#sidebar{ width: 18%;}
+#content{
+    width: 82%;
+    padding: 0px 20px;
+    border-left: 1px solid #ddd;
+}
+#main-menu-wp{ padding-top: 15px;}
+#main-menu-wp .list-item li a{
+    display: block;
+    color: #333;
+    padding: 8px 20px;
+    line-height: 21px;
+}
+#main-menu-wp .list-item li.active a{
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+    color: #c10000;
+}
+.section-title{
+    padding: 20px 0px;
+    font-family: 'Roboto Medium';
+    text-transform: uppercase;
+    font-size: 18px;
+}
+.list-cat .list-item li{
+    float: left;
+    width: 23.5%; 
+    margin-right: 2%;
+    margin-bottom: 4%;
+}
+.list-cat .list-item li:nth-child(4n){ margin-right: 0;}
+.list-cat .list-item li .title{
+    display: block;
+    padding: 10px 0px 5px 0px;
+    color: #333;
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+}
+.list-cat .list-item li .thumb{ display: block;}
+.list-cat .list-item li .price{
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+    color: #c10000;
+    font-size: 13px;
+    line-height: 18px;
+}

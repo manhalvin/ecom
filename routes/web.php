@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminGroupsController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminPermissionController;
+use App\Http\Controllers\Demo\DemoCartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,3 +129,10 @@ Route::controller(App\Http\Controllers\Auth\AuthOtpController::class)->group(fun
 });
 
 Route::get('sendSMS', [NexmoSMSController::class, 'index']);
+Route::get('demo/cart/add/{id}', [DemoCartController::class, 'add']);
+Route::get('demo/cart/delete/{id}', [DemoCartController::class, 'delete'])->name('demo.cart.delete');
+Route::post('demo/cart/update/', [DemoCartController::class, 'update'])->name('demo.cart.update');
+Route::post('demo/cart/update/ajax', [DemoCartController::class, 'updateAjax'])->name('demo.cart.update_ajax');
+Route::get('demo/cart/delete/', [DemoCartController::class, 'deleteAll'])->name('demo.cart.delete_all');
+// Route::get('demo/cart/updateInfo', [DemoCartController::class, 'updateInfoCart']);
+Route::get('demo/cart/', [DemoCartController::class, 'index'])->name('demo.cart.index');

@@ -1,0 +1,23 @@
+/*HEADER*/
+#header-wp{ border-bottom: 1px solid #bdbdbd;}
+#logo{
+    display: block;
+    font-family: 'Roboto Bold';
+    text-transform: uppercase;
+    font-size: 21px;
+    color: #333;
+    padding: 20px 10px;
+}
+#btn-cart{ position: relative;}
+#btn-cart{ 
+    position: relative;
+    display: block;
+    padding: 20px 10px;
+}
+#btn-cart #num{
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: #b70000;
+    font-family: 'Roboto Medium';
+}

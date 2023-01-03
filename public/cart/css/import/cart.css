@@ -1,0 +1,77 @@
+/*CART*/
+.table>tfoot>tr>td{ border-top: none!important;}
+#info-cart-wp table tr td{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+#info-cart-wp table thead tr td{
+    font-family: 'Roboto Medium';
+    padding: 10px 20px;
+    color: #333;
+    border: 0;
+}
+#info-cart-wp table tbody tr td{
+    color: #444;
+    padding: 15px 0px;
+}
+#info-cart-wp table tbody tr td .num-order{
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+}
+#info-cart-wp table tbody tr td .thumb{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+#checkout-cart, #update-cart{
+    display: inline-block;
+    color: #333;
+    background: #ececec;
+    border: 1px solid #c5c5c5;
+    padding: 10px 15px;
+    margin-right: 5px;
+    font-size: 13px;
+    border-radius: 3px;
+}
+#checkout-cart:hover, #update-cart:hover{
+    background: #d0d0d0;
+}
+#info-cart-wp table tfoot tr td #action-cart a:nth-child(2){ margin-right: 0;}
+#total-price{
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+}
+#total-price span{ color: #ad0000;}
+#action-cart-wp{ padding: 30px 0px;}
+#action-cart-wp .title{ padding-bottom: 5px;}
+#action-cart-wp .section-detail .title span{
+    font-family: 'Roboto Medium';
+    font-weight: normal;
+}
+#action-cart-wp a{
+    display: inline-block;
+    padding: 5px 0px;
+    color: #006cbb;
+    line-height: 21px;
+}
+.cart-page #breadcrumb-wp .title{
+    display: block;
+    padding: 20px 0px;
+    font-family: 'Roboto Medium';
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #272727;
+    text-align: center;
+}
+#info-cart-wp .table thead{
+    background: #efefef;
+    border-top: 1px solid #dadada;
+}

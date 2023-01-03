@@ -1,0 +1,23 @@
+/*DETAIL NEWS*/
+#detail-news-wp{ min-height: 540px;}
+#detail-news-wp .create-date{
+    position: relative;
+    font-size: 13px;
+    line-height: 18px;
+    color: #666;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+#detail-news-wp .create-date:before{
+    position: absolute;
+    content: '\f017';
+    font-family: 'FontAwesome';
+    top: 0;
+    left: 0;
+    color: #666;
+}
+.content-news p{
+    color: #333;
+    padding-bottom: 10px;
+    text-align: justify;
+}

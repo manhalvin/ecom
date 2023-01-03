@@ -1,0 +1,8 @@
+/*FOOTER*/
+#footer-wp{  border-top: 1px solid #bdbdbd;}
+#copyright{
+    font-size: 13px;
+    color: #555;
+    padding: 10px 20px;
+    text-align: center;
+}
